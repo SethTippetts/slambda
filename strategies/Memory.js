@@ -2,7 +2,6 @@
 
 const Errors = require('../lib/errors');
 const Bluebird = require('bluebird');
-const uuid = require('uuid');
 const debug = require('debug')('slambda:storage:Memory');
 
 const NotFound = Errors.NotFoundError;
@@ -42,7 +41,6 @@ module.exports = class Memory {
 
   put(table, obj) {
     debug(`#put() ${JSON.stringify(arguments)}`);
-    if (!obj.id) obj.id = uuid.v4();
     this.store[table][obj.id] = obj;
     return Bluebird.resolve(obj);
   }

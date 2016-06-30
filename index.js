@@ -1,14 +1,13 @@
 'use strict';
 
-const AWS = require('aws-sdk');
-const Bluebird = require('bluebird');
 const debug = require('debug')('slambda');
 
-const Storage = require('./storage');
 const Container = require('./Container');
-const getExecution = require('./execution');
+const Storage = require('./Storage');
 
-AWS.config.setPromisesDependency(Bluebird);
+// Default Strategies
+const Local = require('./Local');
+const Memory = require('./Memory');
 
 const defaultOptions = {
   autoDeploy: true,
@@ -23,28 +22,12 @@ const defaultOptions = {
     region: 'us-east-1',
     timeout: 10,
   },
-  storage: {
-    strategy: 'memory',
-    tables: {
-      container: 'Slambda-Container',
-      method: 'Slambda-Method',
-    },
-  },
-  execution: {
-    strategy: 'local',
-    aws: {
-      region: 'us-east-1',
-      s3: {
-        bucket: 'io.graphyte.sandbox',
-        prefix: 'archive',
-      },
-    },
-  },
+  storage: new Memory(),
+  execution: Local,
 };
 
 module.exports = class Slambda {
   constructor(options) {
-    if (typeof options === 'string') options = { container: options };
     this.options = Object.assign({}, defaultOptions, options);
 
     let Execution = getExecution(this.options.execution.strategy);

@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/SethTippetts/slambda.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "node-debug test/index.js"
@@ -10,11 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.4.2",
     "bluebird": "^3.4.1",
-    "debug": "^2.2.0",
-    "lodash.get": "^4.3.0",
-    "spawn-npm-install": "^1.2.0",
-    "uuid": "^2.0.2"
+    "debug": "^2.2.0"
   }
 }
