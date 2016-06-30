@@ -1,6 +1,6 @@
 'use strict';
 
-const tables = require('slambda-utils').constants.tables;
+const tables = require('slambda-utils').tables;
 
 const METHOD = tables.METHOD;
 const CONTAINER = tables.CONTAINER;
