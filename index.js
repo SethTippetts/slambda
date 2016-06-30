@@ -23,17 +23,15 @@ const defaultOptions = {
     timeout: 10,
   },
   storage: new Memory(),
-  execution: Local,
+  execution: new Local(),
 };
 
 module.exports = class Slambda {
   constructor(options) {
     this.options = Object.assign({}, defaultOptions, options);
 
-    let Execution = getExecution(this.options.execution.strategy);
-
     this.storage = new Storage(this.options.storage, this.options.container);
-    this.execution = (id) => new Execution(id, this.options.execution);
+    this.execution = this.options.execution;
   }
 
   container(id, container) {
@@ -42,7 +40,7 @@ module.exports = class Slambda {
       this.storage.putContainer(Object.assign({ id }, container));
     }
 
-    return new Container(id, this.storage, this.execution(id), { autoDeploy: this.options.autoDeploy });
+    return new Container(id, this.storage, this.execution, { autoDeploy: this.options.autoDeploy });
   }
 }
 

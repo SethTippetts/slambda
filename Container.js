@@ -12,8 +12,6 @@ module.exports = class Container {
     this.executor = executor;
 
     this.options = options;
-
-    this.run = executor.run.bind(executor);
   }
 
   method(id, code) {
@@ -25,6 +23,10 @@ module.exports = class Container {
         .catch(ex => console.error(ex));
     }
     return this;
+  }
+
+  run(id, args) {
+    return this.executor.run(this.id, id, args);
   }
 
   deploy() {
