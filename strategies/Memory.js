@@ -1,25 +1,27 @@
 'use strict';
 
-const Errors = require('../lib/errors');
 const Bluebird = require('bluebird');
 const debug = require('debug')('slambda:storage:Memory');
 
-const NotFound = Errors.NotFoundError;
+const tables = require('slambda-utils').tables;
+
+const METHOD = tables.METHOD;
+const CONTAINER = tables.CONTAINER;
 
 module.exports = class Memory {
   constructor(options) {
     debug('constructor');
-    this.store = {};
-
-    Object.keys(options.tables)
-      .map(key => this.store[options.tables[key]] = {});
+    this.store = {
+      [METHOD]: {},
+      [CONTAINER]: {},
+    };
   }
 
   get(table, id) {
     debug(`#get() ${JSON.stringify(arguments)}`);
     let item = this.store[table][id];
     if (item) return Bluebird.resolve(item);
-    return reject(`Item "${id}" not found in table "${table}"`, NotFound);
+    return reject(`Item "${id}" not found in table "${table}"`);
   }
 
   findById(table, index, id) {

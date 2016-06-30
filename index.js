@@ -6,8 +6,8 @@ const Container = require('./Container');
 const Storage = require('./Storage');
 
 // Default Strategies
-const Local = require('./Local');
-const Memory = require('./Memory');
+const Local = require('./strategies/Local');
+const Memory = require('./strategies/Memory');
 
 const defaultOptions = {
   autoDeploy: true,
