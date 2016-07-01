@@ -2,7 +2,9 @@
 
 const debug = require('debug')('slambda');
 
+const constants = require('./constants');
 const Container = require('./Container');
+const Batch = require('./Batch');
 const Storage = require('./Storage');
 
 // Default Strategies
@@ -26,7 +28,7 @@ const defaultOptions = {
   execution: new Local(),
 };
 
-module.exports = class Slambda {
+class Slambda {
   constructor(options) {
     this.options = Object.assign({}, defaultOptions, options);
 
@@ -45,4 +47,8 @@ module.exports = class Slambda {
 }
 
 
+Slambda.Batch = Batch;
+Slambda.METHOD_TABLE = constants.METHOD_TABLE;
+Slambda.CONTAINER_TABLE = constants.CONTAINER_TABLE;
 
+module.exports = Slambda;

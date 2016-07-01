@@ -1,7 +1,7 @@
 'use strict';
 
 const Bluebird = require('bluebird');
-const Batch = require('slambda-utils').Batch;
+const Batch = require('../Batch');
 const debug = require('debug')('slambda:execution:Local');
 
 const Method = require('../Method');

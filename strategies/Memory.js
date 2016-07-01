@@ -3,17 +3,17 @@
 const Bluebird = require('bluebird');
 const debug = require('debug')('slambda:storage:Memory');
 
-const tables = require('slambda-utils').tables;
+const constants = require('../constants');
 
-const METHOD = tables.METHOD;
-const CONTAINER = tables.CONTAINER;
+const METHOD_TABLE = constants.METHOD_TABLE;
+const CONTAINER_TABLE = constants.CONTAINER_TABLE;
 
 module.exports = class Memory {
   constructor(options) {
     debug('constructor');
     this.store = {
-      [METHOD]: {},
-      [CONTAINER]: {},
+      [METHOD_TABLE]: {},
+      [CONTAINER_TABLE]: {},
     };
   }
 

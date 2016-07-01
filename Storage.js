@@ -1,9 +1,9 @@
 'use strict';
 
-const tables = require('slambda-utils').tables;
+const constants = require('./constants');
 
-const METHOD = tables.METHOD;
-const CONTAINER = tables.CONTAINER;
+const METHOD = constants.METHOD_TABLE;
+const CONTAINER = constants.CONTAINER_TABLE;
 
 const debug = require('debug')('slambda:storage');
 
