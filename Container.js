@@ -12,6 +12,7 @@ module.exports = class Container {
     this.executor = executor;
 
     this.options = options;
+    this.deploying = Bluebird.resolve();
   }
 
   method(id, code) {
@@ -26,17 +27,22 @@ module.exports = class Container {
   }
 
   run(id, args) {
-    return this.executor.run(this.id, id, args);
+    return this.deploying.then(() =>
+      this.executor.run(this.id, id, args)
+    );
   }
 
   deploy() {
     debug(`#deploy()`);
-    return Bluebird.all([
+
+    this.deploying = Bluebird.all([
       this.storage.getContainer(this.id),
       this.storage.listMethods(this.id),
     ])
     .spread(this.executor.deploy.bind(this.executor))
     .catch(ex => console.error(ex));
+
+    return this;
   }
 }
 
