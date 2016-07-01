@@ -26,12 +26,11 @@ class Stack {
     this.inputs = [];
     this.promises = [];
     this.exec(this.id, inputs)
-      .then(outputs => {
-        console.log('output', outputs);
-        outputs.map((output, idx) => {
-          promises[idx].resolve(output);
-        })
-      })
+      .then(outputs =>
+        outputs.map((output, idx) =>
+          promises[idx].resolve(output)
+        )
+      )
   }
 }
 
