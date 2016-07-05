@@ -75,7 +75,7 @@ All required adapter methods *must* return a [Bluebird](https://www.npmjs.com/pa
 ### Storage
 
 Storage adapters tell Slambda how to persist methods and containers.
-The default is [Memory](https://github.com/SethTippetts/slambda/blob/master/strategies/Memory.js).
+The default is [Memory](https://github.com/SethTippetts/slambda/blob/masterStore/adapters/MemoryStore.js).
 Storage adapters can take whatever configuration they need.
 
 #### Required methods:
@@ -99,7 +99,7 @@ Deletes specified entity by ID
 
 #### Officially supported storage adapters:
 
-- [Memory](https://github.com/SethTippetts/slambda/blob/master/strategies/Memory.js) (default)
+- [Memory](https://github.com/SethTippetts/slambda/blob/master/adapters/MemoryStore.js) (default)
 - [DynamoDB](https://github.com/SethTippetts/slambda-aws-dynamo)
 - FileSystem *(Coming soon)*
 - AWS S3 *(Coming soon)*
@@ -109,7 +109,7 @@ Deletes specified entity by ID
 ### Execution
 
 Execution adapters tell Slambda how to run your code snippets. The default is
-[Memory](https://github.com/SethTippetts/slambda/blob/master/strategies/Local.js).
+[Memory](https://github.com/SethTippetts/slambda/blob/master/adapters/MemoryExec.js).
 
 #### Required methods:
 
@@ -130,7 +130,7 @@ Where possible, the `.run()` method should try to batch requests.
 
 #### Officially supported execution adapters:
 
-- [Memory](https://github.com/SethTippetts/slambda/blob/master/strategies/Local.js) (default)
+- [Memory](https://github.com/SethTippetts/slambda/blob/master/adapters/MemoryExec.js) (default)
 - [Local](https://github.com/SethTippetts/slambda-local) (File system)
 - [AWS Lambda](https://github.com/SethTippetts/slambda-aws-lambda)
 - Google Cloud Functions *(Coming soon)*

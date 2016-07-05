@@ -7,8 +7,8 @@ const Container = require('./Container');
 const Batch = require('./Batch');
 
 // Default Strategies
-const MemoryExec = require('./strategies/MemoryExec');
-const MemoryStore = require('./strategies/MemoryStore');
+const MemoryExec = require('./adapters/MemoryExec');
+const MemoryStore = require('./adapters/MemoryStore');
 
 const defaultOptions = {
   autoDeploy: true,
