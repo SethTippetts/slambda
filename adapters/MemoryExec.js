@@ -1,10 +1,10 @@
 'use strict';
 
 const Bluebird = require('bluebird');
-const Batch = require('../Batch');
 const debug = require('debug')('slambda:execution:Memory');
 
-const Method = require('../Method');
+const Batch = require('../lib/Batch');
+const Method = require('../lib/Method');
 
 module.exports = class Local {
   constructor(options) {

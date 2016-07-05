@@ -3,8 +3,8 @@
 const debug = require('debug')('slambda');
 
 const constants = require('./constants');
-const Container = require('./Container');
-const Batch = require('./Batch');
+const Container = require('./lib/Container');
+const Batch = require('./lib/Batch');
 
 // Default Strategies
 const MemoryExec = require('./adapters/MemoryExec');
