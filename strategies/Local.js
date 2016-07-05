@@ -2,14 +2,14 @@
 
 const Bluebird = require('bluebird');
 const Batch = require('../Batch');
-const debug = require('debug')('slambda:execution:Local');
+const debug = require('debug')('slambda:execution:Memory');
 
 const Method = require('../Method');
 
 module.exports = class Local {
   constructor(options) {
     debug(`constructor`);
-    this.methods = {};
+    this.containers = {};
 
     let batch = new Batch(this.execute.bind(this));
     this.run = batch.run.bind(batch);
@@ -17,24 +17,29 @@ module.exports = class Local {
 
   deploy(container, methods) {
     debug(`#deploy() Container: ${container.id} Methods: ${methods.length}`);
-    this.ctx = new Method(container.lifecycle.init).run()
-    this.container = container;
-    this.methods = methods.reduce((prev, curr) => {
-      prev[curr.id] = new Method(curr.code.toString());
-      return prev;
-    }, {});
+    let containerClone = Object.assign({}, container, {
+      ctx: new Method(container.lifecycle.init).run(),
+      methods: methods.reduce((prev, curr) => {
+        prev[curr.id] = new Method(curr.code.toString());
+        return prev;
+      }, {}),
+    });
+    this.containers[containerClone.id] = containerClone;
   }
 
   execute(id, calls) {
+    let container = this.containers[id];
+    let methods = container.methods;
+    let ctx = container.ctx;
     debug(`#execute() Calls: ${calls.length}`);
     return Bluebird.all(
       calls
         .map(method => {
-          let fn = this.methods[method.id];
+          let fn = methods[method.id];
           if (typeof fn === 'undefined') return Bluebird.resolve(method.arguments).reflect();
 
-          return fn.run(method.arguments, this.ctx)
-            .timeout((this.container.timeout * 1000) - 100)
+          return fn.run(clone(method.arguments), ctx)
+            .timeout((container.timeout * 1000) - 100)
             .catch(Bluebird.TimeoutError, function(e) {
               throw new Error(`Function timeout out in ${timeout}ms`);
             })
@@ -50,3 +55,6 @@ module.exports = class Local {
   }
 }
 
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
