@@ -1,6 +1,6 @@
 {
   "name": "slambda",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Containerized code for easy app extensibility",
   "main": "index.js",
   "repository": {
